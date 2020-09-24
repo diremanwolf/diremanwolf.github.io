@@ -75,7 +75,7 @@ button.addEventListener('click', async () => {
 
 
         values.set([0x6d, 0x65, 0x6d])
-        result = await selectedDevice.transferOut(0x01, values.buffer)
+        result = await selectedDevice.transferOut(0x02, values.buffer)
 
         do {
             result = await selectedDevice.transferIn(0x03, 1024);
