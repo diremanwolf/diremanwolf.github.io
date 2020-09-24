@@ -91,7 +91,7 @@ button.addEventListener('click', async () => {
 
         const data = new Uint8Array(3)
         data.set([0x6d, 0x65, 0x6d])
-        result = await selectedDevice.transferOut(1, data.buffer)
+        result = await selectedDevice.transferOut(0x02, data.buffer)
         console.log('mem:', result)
 
         const timeoutID = window.setTimeout(async () => {
