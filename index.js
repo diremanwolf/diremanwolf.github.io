@@ -15,7 +15,7 @@ button.addEventListener('click', async () => {
         recipient: 'device',
         request: 0x08,
         value: 0x00,
-        index: 0x03
+        index: 0x02
       }
 
     const openPort = {
@@ -23,7 +23,7 @@ button.addEventListener('click', async () => {
         recipient: 'device',
         request: 0x06,
         value: 0x89,
-        index: 0x03
+        index: 0x02
     }
 
     const setPortConfig = {
@@ -31,7 +31,7 @@ button.addEventListener('click', async () => {
         recipient: 'device',
         request: 0x05,
         value: 0x00,
-        index: 0x03
+        index: 0x02
     }
 
     const closePort = {
@@ -50,7 +50,7 @@ button.addEventListener('click', async () => {
         await selectedDevice.open();
         console.info(selectedDevice);
 
-        await selectedDevice.claimInterface(0)
+        await selectedDevice.claimInterface(1)
         console.info(selectedDevice.configuration.interfaces)
 
         result = await selectedDevice.controlTransferOut(openPort)
@@ -78,7 +78,7 @@ button.addEventListener('click', async () => {
         result = await selectedDevice.transferOut(0x01, values.buffer)
 
         do {
-            result = await selectedDevice.transferIn(0x01, 1024);
+            result = await selectedDevice.transferIn(0x03, 1024);
                 
             if (result.data.byteLength > 0) {
                 const decode = new TextDecoder();
