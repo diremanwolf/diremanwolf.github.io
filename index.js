@@ -53,7 +53,7 @@ button.addEventListener('click', async () => {
             await close()
         }, 5000);
 
-        let incoming = await selectedDevice.transferIn(1, 1024)
+        let incoming = await selectedDevice.transferIn(0x01, 1024)
         if (incoming.data.byteLength > 0) {
             clearTimeout(timeoutID)
             let decoder = new TextDecoder() // eslint-disable-line no-undef
