@@ -3,7 +3,7 @@ const device = [{
     vendorId: 0x079B,
     productId: 0x0047
 }];
-const config = new Uint8Array(10);
+const config = new Uint16Array(10);
 
 button.addEventListener('click', async () => {
     let selectedDevice;
@@ -91,7 +91,7 @@ button.addEventListener('click', async () => {
 
         const data = new Uint8Array(3)
         data.set([0x6d, 0x65, 0x6d])
-        result = await selectedDevice.transferOut(0x01, data.buffer)
+        result = await selectedDevice.transferOut(0x00, data.buffer)
         console.log('mem:', result)
 
         const timeoutID = window.setTimeout(async () => {
