@@ -10,6 +10,14 @@ const config = new Uint8Array(10);
 button.addEventListener('click', async () => {
     let selectedDevice;
 
+    const openPort = {
+        requestType: 'vendor',
+        recipient: 'device',
+        request: 0x06,
+        value: 0x89,
+        index: 0x03
+    }
+
     try {
         selectedDevice = await navigator.usb.requestDevice({
             filters: device
@@ -19,7 +27,10 @@ button.addEventListener('click', async () => {
         console.info(selectedDevice);
 
         await selectedDevice.claimInterface(0)
-        console.log('interfaces:', selectedDevice.configuration.interfaces)
+        console.info(selectedDevice.configuration.interfaces)
+
+        let result = await device.controlTransferOut(openPort)
+        console.info(result)
     } catch (error) {
         console.error(error);
     }
