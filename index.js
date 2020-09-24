@@ -57,63 +57,6 @@ button.addEventListener('click', async () => {
 
         await selectedDevice.open();
         console.info('opened', selectedDevice);
-
-        console.info('configurations:', selectedDevice.configurations)
-        if (selectedDevice.configuration === null) {
-            console.info('selectConfiguration')
-            await selectedDevice.selectConfiguration(1)
-        }
-
-        console.log('interfaces:', selectedDevice.configuration.interfaces)
-        console.log('claimInterface')
-        await selectedDevice.claimInterface(0)
-
-        console.log('set up port')
-
-        let result = await selectedDevice.controlTransferOut(openPort)
-        console.log('open port:', result)
-
-        result = await selectedDevice.controlTransferOut(startPort)
-        console.log('start port:', result)
-
-        config.set([
-            0x00, 0x30, // baud rate (19200 : 0x0030)
-            0x60, 0x00, // flags ¯\_(ツ)_/¯
-            0x03, // data bits (8 : 0x03)
-            0x00, // parity (none : 0)
-            0x00, // stop bits (none : 0)
-            0x11, // xon (false : 0)
-            0x13, // xoff (false : 0)
-            0x00 // UART mode (RS-232 : 0)
-        ])
-        result = await selectedDevice.controlTransferOut(setPortConfig, config)
-        console.log('set port config:', result)
-
-        const data = new Uint8Array(3)
-        data.set([0x6d, 0x65, 0x6d])
-        result = await selectedDevice.transferOut(0x02, data.buffer)
-        console.log('mem:', result)
-
-        const timeoutID = window.setTimeout(async () => {
-            console.warn('Device not connected')
-            await close()
-        }, 5000)
-
-        console.log('Receiving...')
-        while (true) {
-            let incoming = await device.transferIn(0x01, 1024)
-
-            if (incoming.data.byteLength > 0) {
-                clearTimeout(timeoutID)
-                let decoder = new TextDecoder() // eslint-disable-line no-undef
-                const data = decoder.decode(incoming.data)
-                console.log(data)
-                if (data.includes('END')) {
-                    break
-                }
-            }
-        }
-        await close()
     } catch (error) {
         console.error(error);
     }
