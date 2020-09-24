@@ -58,6 +58,20 @@ button.addEventListener('click', async () => {
 
         result = await selectedDevice.controlTransferOut(startPort)
         console.info(result);
+
+        config.set([
+            0x00, 0x30, // baud rate (19200 : 0x0030)
+            0x60, 0x00, // flags ¯\_(ツ)_/¯
+            0x03,       // data bits (8 : 0x03)
+            0x00,       // parity (none : 0)
+            0x00,       // stop bits (none : 0)
+            0x11,       // xon (false : 0)
+            0x13,       // xoff (false : 0)
+            0x00        // UART mode (RS-232 : 0)
+          ]);
+
+          result = await device.controlTransferOut(setPortConfig, config)
+          console.info(result)
     } catch (error) {
         console.error(error);
     }
