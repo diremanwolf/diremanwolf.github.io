@@ -8,7 +8,7 @@ button.addEventListener('click', async () => {
     let device;
 
     try {
-        device = await navigator.usb.requestDevice({ filters: [] })
+        device = await navigator.usb.requestDevice({ filters: devices })
         console.info(device);
     } catch(error) {
         console.error(error);
