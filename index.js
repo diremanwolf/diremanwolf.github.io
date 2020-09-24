@@ -21,7 +21,7 @@ button.addEventListener('click', async () => {
             await selectedDevice.selectConfiguration(1);
         }
         
-        await selectedDevice.claimInterface(2);
+        await selectedDevice.claimInterface(0);
         console.info('interface', selectedDevice)
 
         await selectedDevice.controlTransferOut({
