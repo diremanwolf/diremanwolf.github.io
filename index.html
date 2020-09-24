@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>WEBUSB 666</title>
+</head>
+
+<body>
+    <button id='request-device'>REQUEST DEVICE</button>
+
+    <script>
+        const button = document.getElementById('request-device');
+
+        const devices = [
+            { vendorId: 0x0951, productId: 0x1665 }
+        ]
+
+        button.addEventListener('click', async () => {
+            let connectedDevice;
+            try {
+                connectedDevice = await navigator.usb.requestDevice({
+                    filters: devices
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>
