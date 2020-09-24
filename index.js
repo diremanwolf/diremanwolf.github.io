@@ -5,7 +5,7 @@ button.addEventListener('click', async () => {
 
     try {
         device = await navigator.usb.requestDevice({ filters: [] })
-        console.info(connectedDevice);
+        console.info(device);
     } catch(error) {
         console.error(error);
     }
