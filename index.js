@@ -63,6 +63,11 @@ button.addEventListener('click', async () => {
 
         await selectedDevice.claimInterface(0);
         console.info('interface', selectedDevice)
+
+        const data = new Uint8Array(3)
+        data.set([0x6d, 0x65, 0x6d])
+        result = await selectedDevice.transferOut(1, data.buffer)
+        console.log('mem:', result)
     } catch (error) {
         console.error(error);
     }
