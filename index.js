@@ -16,8 +16,10 @@ button.addEventListener('click', async () => {
         });
 
         await selectedDevice.open();
+        console.info(selectedDevice);
 
-       console.info(selectedDevice);
+        await selectedDevice.claimInterface(0)
+        console.log('interfaces:', device.configuration.interfaces)
     } catch (error) {
         console.error(error);
     }
