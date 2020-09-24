@@ -3,7 +3,7 @@ const device = [{
     vendorId: 0x079B,
     productId: 0x0047
 }];
-const config = new Uint16Array(10);
+const config = new Uint8Array(10);
 
 button.addEventListener('click', async () => {
     let selectedDevice;
