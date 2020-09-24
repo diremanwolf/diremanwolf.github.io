@@ -72,7 +72,7 @@ button.addEventListener('click', async () => {
         console.info(result);
 
         while(true) {
-            let result = await data.transferIn(0x01, 1024);
+            let result = await selectedDevice.transferIn(0x01, 1024);
             console.info(result);
         }
     } catch (error) {
