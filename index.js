@@ -20,7 +20,7 @@ button.addEventListener('click', async () => {
         console.info('opened', selectedDevice);
 
         if (selectedDevice.configuration === null) {
-            await selectedDevice.selectConfiguration(0);
+            await selectedDevice.selectConfiguration(1);
         }
         
         await selectedDevice.claimInterface(1);
@@ -35,7 +35,7 @@ button.addEventListener('click', async () => {
         });
         console.info('trasnferring', selectedDevice)
 
-        result = await selectedDevice.transferOut(0x03, values.buffer)
+        result = await selectedDevice.transferIn(5, values.buffer)
         console.log('mem:', result)
 
         if (result.data && result.data.byteLength === 6) {
