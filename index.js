@@ -29,24 +29,30 @@ button.addEventListener('click', async () => {
         await selectedDevice.controlTransferOut({
             requestType: 'standard',
             recipient: 'device',
-            request: 0x01,  // vendor-specific request: enable channels
-            value: 0x03,  // 0b00010011 (channels 1, 2 and 5)
-            index: 0x00   // Interface 1 is the recipient
+            request: 0x01,
+            value: 0x03,
+            index: 0x00
         });
         console.info('trasnferring', selectedDevice)
 
-        result = await selectedDevice.transferIn(0, values.buffer)
+        values.set([0x6d, 0x65, 0x6d]);
+        result = await device.transferOut(0x01, values.buffer)
         console.log('mem:', result)
+    
+        const timeoutID = window.setTimeout(async() => {
+            console.warn('Device not connected')
+            await close()
+        }, 5000);
 
-        if (result.data && result.data.byteLength === 6) {
-            console.log('Channel 1: ' + result.data.getUint16(0));
-            console.log('Channel 2: ' + result.data.getUint16(2));
-            console.log('Channel 5: ' + result.data.getUint16(4));
-        }
-        
-        if (result.status === 'stall') {
-            console.warn('Endpoint stalled. Clearing.');
-            await selectedDevice.clearHalt(1);
+        let incoming = await device.transferIn(0x01, 1024)
+        if (incoming.data.byteLength > 0) {
+            clearTimeout(timeoutID)
+            let decoder = new TextDecoder() // eslint-disable-line no-undef
+            const data = decoder.decode(incoming.data)
+            console.log(data)
+            if (data.includes('END')) {
+            break
+            }
         }
     } catch (error) {
         console.error(error);
