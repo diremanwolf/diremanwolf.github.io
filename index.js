@@ -21,19 +21,19 @@ button.addEventListener('click', async () => {
             await selectedDevice.selectConfiguration(1);
         }
         
-        await selectedDevice.claimInterface(0);
+        await selectedDevice.claimInterface(1);
         console.info('interface', selectedDevice)
 
         await selectedDevice.controlTransferOut({
             requestType: 'vendor',
             recipient: 'interface',
-            request: 0x00,  // vendor-specific request: enable channels
+            request: 0x02,  // vendor-specific request: enable channels
             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
             index: 0x0001   // Interface 1 is the recipient
         });
         console.info('trasnferring', selectedDevice)
 
-        let result = await data.transferIn(0, 6);
+        let result = await data.transferIn(0x03, 6);
         console.info(result);
 
         if (result.data && result.data.byteLength === 6) {
