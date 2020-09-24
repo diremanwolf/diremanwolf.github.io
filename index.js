@@ -8,46 +8,7 @@ const config = new Uint8Array(10);
 button.addEventListener('click', async () => {
     let selectedDevice;
 
-    const setPortConfig = {
-        requestType: 'vendor',
-        recipient: 'device',
-        request: 0x05,
-        value: 0x00,
-        index: 0x03
-    }
-
-    const openPort = {
-        requestType: 'vendor',
-        recipient: 'device',
-        request: 0x06,
-        value: 0x89,
-        index: 0x03
-    }
-
-    const startPort = {
-        requestType: 'vendor',
-        recipient: 'device',
-        request: 0x08,
-        value: 0x00,
-        index: 0x03
-    }
-
-    const closePort = {
-        requestType: 'vendor',
-        recipient: 'device',
-        request: 0x07,
-        value: 0x00,
-        index: 0x03
-    }
-
-    async function close() {
-        let result = await selectedDevice.controlTransferOut(closePort)
-
-        console.info(result)
-
-        await selectedDevice.releaseInterface(0)
-        await selectedDevice.close()
-    }
+    
 
     try {
         selectedDevice = await navigator.usb.requestDevice({
@@ -64,10 +25,28 @@ button.addEventListener('click', async () => {
         await selectedDevice.claimInterface(0);
         console.info('interface', selectedDevice)
 
-        const data = new Uint8Array(3)
-        data.set([0x6d, 0x65, 0x6d])
-        result = await selectedDevice.transferOut(3, data.buffer)
-        console.log('mem:', result)
+        await selectedDevice.controlTransferOut({
+            requestType: 'vendor',
+            recipient: 'interface',
+            request: 0x01,  // vendor-specific request: enable channels
+            value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
+            index: 0x0001   // Interface 1 is the recipient
+        });
+        console.info('trasnferring', selectedDevice)
+
+        let result = await data.transferIn(1, 6);
+        console.info(result);
+
+        if (result.data && result.data.byteLength === 6) {
+            console.log('Channel 1: ' + result.data.getUint16(0));
+            console.log('Channel 2: ' + result.data.getUint16(2));
+            console.log('Channel 5: ' + result.data.getUint16(4));
+        }
+        
+        if (result.status === 'stall') {
+            console.warn('Endpoint stalled. Clearing.');
+            await selectedDevice.clearHalt(1);
+        }
     } catch (error) {
         console.error(error);
     }
