@@ -68,14 +68,13 @@ button.addEventListener('click', async () => {
             0x00        // UART mode (RS-232 : 0)
           ]);
 
-          result = await selectedDevice.controlTransferOut(setPortConfig, config)
-          console.info(result);
-
-        const values = new Uint8Array(3);
-        values.set([0x6d, 0x65, 0x6d]);
-        
-        result = await selectedDevice.transferOut(0x01, values.buffer);
+        result = await selectedDevice.controlTransferOut(setPortConfig, config)
         console.info(result);
+
+        while(true) {
+            let result = await data.transferIn(1, 6);
+            console.info(result);
+        }
     } catch (error) {
         console.error(error);
     }
