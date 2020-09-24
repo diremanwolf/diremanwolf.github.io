@@ -17,30 +17,7 @@ button.addEventListener('click', async () => {
 
         await selectedDevice.open();
 
-        await selectedDevice.selectConfiguration(1);
-        
-        await selectedDevice.claimInterface(1);
-
-        await selectedDevice.controlTransferOut({
-            requestType: 'vendor',
-            recipient: 'interface',
-            request: 1,
-            value: 3,
-            index: 1
-        });
-
-        console.info('AFK: ', selectedDevice)
-    
-        let incoming = await selectedDevice.transferIn(3, 64)
-        if (incoming.data.byteLength > 0) {
-            let decoder = new TextDecoder() // eslint-disable-line no-undef
-            const data = decoder.decode(incoming.data)
-            console.log(data)
-            if (data.includes('END')) {
-                console.info('stops');
-                return false;
-            }
-        }
+       console.info(selectedDevice);
     } catch (error) {
         console.error(error);
     }
