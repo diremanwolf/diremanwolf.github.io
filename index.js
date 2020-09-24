@@ -74,9 +74,9 @@ button.addEventListener('click', async () => {
         while(true) {
             let result = await selectedDevice.transferIn(0x01, 1024);
             
-            if (incoming.data.byteLength > 0) {
+            if (result.data.byteLength > 0) {
                 const decode = new TextDecoder();
-                const values = decode.decode(incoming.data);
+                const values = decode.decode(result.data);
                 console.info(values)
                 if(values.includes('END')) {
                   return;
