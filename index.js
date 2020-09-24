@@ -31,7 +31,7 @@ button.addEventListener('click', async () => {
 
         console.info('AFK: ', selectedDevice)
     
-        let incoming = await selectedDevice.transferIn(1, 6)
+        let incoming = await selectedDevice.transferIn(3, 64)
         if (incoming.data.byteLength > 0) {
             let decoder = new TextDecoder() // eslint-disable-line no-undef
             const data = decoder.decode(incoming.data)
