@@ -8,8 +8,6 @@ const config = new Uint8Array(10);
 button.addEventListener('click', async () => {
     let selectedDevice;
 
-    
-
     try {
         selectedDevice = await navigator.usb.requestDevice({
             filters: device
@@ -29,7 +27,7 @@ button.addEventListener('click', async () => {
         await selectedDevice.controlTransferOut({
             requestType: 'vendor',
             recipient: 'interface',
-            request: 0x00,  // vendor-specific request: enable channels
+            request: 0x01,  // vendor-specific request: enable channels
             value: 0x0013,  // 0b00010011 (channels 1, 2 and 5)
             index: 0x0001   // Interface 1 is the recipient
         });
