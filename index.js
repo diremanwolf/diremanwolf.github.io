@@ -20,7 +20,7 @@ button.addEventListener('click', async () => {
         console.info('opened', selectedDevice);
 
         if (selectedDevice.configuration === null) {
-            await selectedDevice.selectConfiguration(1);
+            await selectedDevice.selectConfiguration(0);
         }
         
         await selectedDevice.claimInterface(1);
