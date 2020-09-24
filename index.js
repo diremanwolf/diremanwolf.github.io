@@ -1,11 +1,9 @@
+const config = new Uint8Array(10);
 const button = document.getElementById('request-device');
 const device = [{
     vendorId: 0x079B,
     productId: 0x0047
 }];
-const values = new Uint8Array(3);
-values.set([0x6d, 0x65, 0x6d]);
-const config = new Uint8Array(10);
 
 button.addEventListener('click', async () => {
     let selectedDevice;
@@ -71,7 +69,13 @@ button.addEventListener('click', async () => {
           ]);
 
           result = await selectedDevice.controlTransferOut(setPortConfig, config)
-          console.info(result)
+          console.info(result);
+
+        const values = new Uint8Array(3);
+        values.set([0x6d, 0x65, 0x6d]);
+        
+        result = await selectedDevice.transferOut(0x01, values.buffer);
+        console.info(result);
     } catch (error) {
         console.error(error);
     }
