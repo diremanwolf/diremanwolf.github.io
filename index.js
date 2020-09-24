@@ -85,7 +85,7 @@ button.addEventListener('click', async () => {
                 const values = decode.decode(result.data);
                 console.info(values)
                 if(values.includes('END')) {
-                    return false;
+                    break;
                 }
             }
         } while(1 === 1);
