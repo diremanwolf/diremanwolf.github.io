@@ -4,7 +4,7 @@ button.addEventListener('click', async () => {
     let device;
 
     try {
-        device = await navigator.usb.requestDevice({ filters: [{ serialNumber: '1420I002904' }] })
+        device = await navigator.usb.requestDevice({ filters: [] })
         console.info(device);
 
         await device.open();
