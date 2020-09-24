@@ -4,7 +4,7 @@ const device = [{
     productId: 0x0047
 }];
 const values = new Uint8Array(3);
-values.set([0x6d, 0x65, 0x6d])
+values.set([0x6d, 0x65, 0x6d]);
 const config = new Uint8Array(10);
 
 button.addEventListener('click', async () => {
@@ -36,7 +36,7 @@ button.addEventListener('click', async () => {
         console.info('trasnferring', selectedDevice)
 
         values.set([0x6d, 0x65, 0x6d]);
-        result = await device.transferOut(0x01, values.buffer)
+        result = await selectedDevice.transferOut(0x01, values.buffer)
         console.log('mem:', result)
     
         const timeoutID = window.setTimeout(async() => {
@@ -45,7 +45,7 @@ button.addEventListener('click', async () => {
         }, 5000);
 
         while(true) {
-            let incoming = await device.transferIn(0x01, 1024)
+            let incoming = await selectedDevice.transferIn(0x01, 1024)
             if (incoming.data.byteLength > 0) {
                 clearTimeout(timeoutID)
                 let decoder = new TextDecoder() // eslint-disable-line no-undef
