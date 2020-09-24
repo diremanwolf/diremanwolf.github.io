@@ -10,6 +10,21 @@ const config = new Uint8Array(10);
 button.addEventListener('click', async () => {
     let selectedDevice;
 
+    const closePort = {
+        requestType: 'vendor',
+        recipient: 'device',
+        request: 0x07,
+        value: 0x00,
+        index: 0x03
+    }
+
+    async function close () {
+        let result = await selectedDevice.controlTransferOut(closePort)
+        console.log('close port:', result)
+        await selectedDevice.releaseInterface(1)
+        await selectedDevice.close()
+    }
+
     try {
         selectedDevice = await navigator.usb.requestDevice({
             filters: device
