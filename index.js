@@ -29,7 +29,7 @@ button.addEventListener('click', async () => {
         await selectedDevice.claimInterface(0)
         console.info(selectedDevice.configuration.interfaces)
 
-        let result = await device.controlTransferOut(openPort)
+        let result = await selectedDevice.controlTransferOut(openPort)
         console.info(result)
     } catch (error) {
         console.error(error);
