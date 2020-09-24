@@ -71,16 +71,14 @@ button.addEventListener('click', async () => {
         result = await selectedDevice.controlTransferOut(setPortConfig, config)
         console.info(result);
 
-        while(true) {
-            let result = await selectedDevice.transferIn(0x01, 1024);
+        let result = await selectedDevice.transferIn(0x01, 1024);
             
-            if (result.data.byteLength > 0) {
-                const decode = new TextDecoder();
-                const values = decode.decode(result.data);
-                console.info(values)
-                if(values.includes('END')) {
-                  return;
-                }
+        if (result.data.byteLength > 0) {
+            const decode = new TextDecoder();
+            const values = decode.decode(result.data);
+            console.info(values)
+            if(values.includes('END')) {
+                return false;
             }
         }
     } catch (error) {
