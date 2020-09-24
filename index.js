@@ -3,6 +3,8 @@ const device = [{
     vendorId: 0x079B,
     productId: 0x0047
 }];
+const values = new Uint8Array(3);
+values.set([0x6d, 0x65, 0x6d])
 const config = new Uint8Array(10);
 
 button.addEventListener('click', async () => {
@@ -33,8 +35,8 @@ button.addEventListener('click', async () => {
         });
         console.info('trasnferring', selectedDevice)
 
-        let result = await data.transferIn(0x03, 6);
-        console.info(result);
+        result = await selectedDevice.transferOut(0x03, values.buffer)
+        console.log('mem:', result)
 
         if (result.data && result.data.byteLength === 6) {
             console.log('Channel 1: ' + result.data.getUint16(0));
