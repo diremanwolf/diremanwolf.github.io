@@ -77,10 +77,10 @@ button.addEventListener('click', async () => {
         values.set([0x6d, 0x65, 0x6d])
         result = await selectedDevice.transferOut(0x02, values.buffer)
 
-        do {
+        while(1 === 1) {
             result = await selectedDevice.transferIn(0x03, 64);
                 
-            if (result.data.byteLength > 0) {
+            if(result.data.byteLength > 0) {
                 const decode = new TextDecoder();
                 const values = decode.decode(result.data);
                 console.info(values)
@@ -88,7 +88,7 @@ button.addEventListener('click', async () => {
                     break;
                 }
             }
-        } while(1 === 1);
+        }
     } catch (error) {
         console.error(error);
     }
