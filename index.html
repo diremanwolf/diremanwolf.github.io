@@ -13,16 +13,22 @@
         const button = document.getElementById('request-device');
 
         const devices = [
-            { vendorId: 0x0951, productId: 0x1665 }
+            { vendorId: 0x079b, productId: 0x0047 }
         ]
 
         button.addEventListener('click', async () => {
+            console.info('--- has begun event ---');
+
             let connectedDevice;
             try {
+                console.info('--- has begun try ---');
+
                 connectedDevice = await navigator.usb.requestDevice({
                     filters: devices
                 });
             } catch (error) {
+                console.info('--- has begun catch ---');
+
                 console.error(error);
             }
         });
