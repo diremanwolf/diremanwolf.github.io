@@ -8,8 +8,6 @@ const config = new Uint8Array(10);
 button.addEventListener('click', async () => {
     let selectedDevice;
 
-    let device
-
     const setPortConfig = {
         requestType: 'vendor',
         recipient: 'device',
