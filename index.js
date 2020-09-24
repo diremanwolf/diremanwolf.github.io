@@ -44,14 +44,16 @@ button.addEventListener('click', async () => {
             await close()
         }, 5000);
 
-        let incoming = await device.transferIn(0x01, 1024)
-        if (incoming.data.byteLength > 0) {
-            clearTimeout(timeoutID)
-            let decoder = new TextDecoder() // eslint-disable-line no-undef
-            const data = decoder.decode(incoming.data)
-            console.log(data)
-            if (data.includes('END')) {
-            break
+        while(true) {
+            let incoming = await device.transferIn(0x01, 1024)
+            if (incoming.data.byteLength > 0) {
+                clearTimeout(timeoutID)
+                let decoder = new TextDecoder() // eslint-disable-line no-undef
+                const data = decoder.decode(incoming.data)
+                console.log(data)
+                if (data.includes('END')) {
+                break;
+                }
             }
         }
     } catch (error) {
