@@ -7,32 +7,8 @@
 </head>
 
 <body>
-    <button id='request-device'>REQUEST DEVICE</button>
-
-    <script>
-        const button = document.getElementById('request-device');
-
-        const devices = [
-            { vendorId: 0x079B, productId: 0x0047 }
-        ]
-
-        button.addEventListener('click', async () => {
-            console.info('--- has begun event ---');
-
-            let connectedDevice;
-            try {
-                console.info('--- has begun try ---');
-
-                connectedDevice = await navigator.usb.requestDevice({
-                    filters: devices
-                });
-            } catch (error) {
-                console.info('--- has begun catch ---');
-
-                console.error(error);
-            }
-        });
-    </script>
+    <button id='request-device' click='connect()'>REQUEST DEVICE</button>
+    <script src='index.js'></script>
 </body>
 
 </html>
