@@ -6,17 +6,13 @@ const devices = [
     { vendorId: 0x079B, productId: 0x0047 }
 ]
 
-const connect = () => {
+button.addEventListener('click', async () => {
     let connectedDevice;
 
-    navigator.usb.requestDevice({
-        filters: devices
-    })
-    .then(selectedDevice => {
-        connectedDevice = selectedDevice;
+    try {
+        connectedDevice = await navigator.usb.requestDevice({ filters: devices })
         console.info(connectedDevice);
-    })
-    .catch(error => {
+    } catch(error) {
         console.error(error);
-    });
-}
+    }
+});
