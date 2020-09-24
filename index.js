@@ -1,3 +1,4 @@
+const values = new Uint8Array(3);
 const config = new Uint8Array(10);
 const button = document.getElementById('request-device');
 const device = [{
@@ -72,16 +73,22 @@ button.addEventListener('click', async () => {
         result = await selectedDevice.controlTransferOut(setPortConfig, config)
         console.info(result);
 
-        result = await selectedDevice.transferIn(0x01, 1024);
-            
-        if (result.data.byteLength > 0) {
-            const decode = new TextDecoder();
-            const values = decode.decode(result.data);
-            console.info(values)
-            if(values.includes('END')) {
-                return false;
+
+        values.set([0x6d, 0x65, 0x6d])
+        result = await selectedDevice.transferOut(0x01, values.buffer)
+
+        do {
+            result = await selectedDevice.transferIn(0x01, 1024);
+                
+            if (result.data.byteLength > 0) {
+                const decode = new TextDecoder();
+                const values = decode.decode(result.data);
+                console.info(values)
+                if(values.includes('END')) {
+                    return false;
+                }
             }
-        }
+        } while(1 === 1);
     } catch (error) {
         console.error(error);
     }
