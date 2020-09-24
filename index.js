@@ -78,7 +78,7 @@ button.addEventListener('click', async () => {
         result = await selectedDevice.transferOut(0x02, values.buffer)
 
         do {
-            result = await selectedDevice.transferIn(0x03, 1024);
+            result = await selectedDevice.transferIn(0x03, 64);
                 
             if (result.data.byteLength > 0) {
                 const decode = new TextDecoder();
