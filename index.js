@@ -3,6 +3,8 @@ const config = new Uint8Array(10);
 const button = document.getElementById('request-device');
 
 button.addEventListener('click', async () => {
+    let device;
+    
     const setPortConfig = {
         requestType: 'vendor',
         recipient: 'device',
