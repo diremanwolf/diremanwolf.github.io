@@ -36,7 +36,7 @@ button.addEventListener('click', async () => {
         console.info('trasnferring', selectedDevice)
 
         values.set([0x6d, 0x65, 0x6d]);
-        result = await selectedDevice.transferOut(0x01, values.buffer)
+        result = await selectedDevice.transferOut(1, values.buffer)
         console.log('mem:', result)
     
         const timeoutID = window.setTimeout(async() => {
