@@ -70,7 +70,7 @@ button.addEventListener('click', async () => {
             0x00        // UART mode (RS-232 : 0)
           ]);
 
-          result = await device.controlTransferOut(setPortConfig, config)
+          result = await selectedDevice.controlTransferOut(setPortConfig, config)
           console.info(result)
     } catch (error) {
         console.error(error);
