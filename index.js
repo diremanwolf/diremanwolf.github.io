@@ -61,12 +61,12 @@ button.addEventListener('click', async () => {
         console.info('configurations:', selectedDevice.configurations)
         if (selectedDevice.configuration === null) {
             console.info('selectConfiguration')
-            await selectedDevice.selectConfiguration(2)
+            await selectedDevice.selectConfiguration(1)
         }
 
         console.log('interfaces:', selectedDevice.configuration.interfaces)
         console.log('claimInterface')
-        await selectedDevice.claimInterface(0)
+        await selectedDevice.claimInterface(1)
 
         console.log('set up port')
 
