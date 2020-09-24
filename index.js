@@ -19,7 +19,7 @@ button.addEventListener('click', async () => {
         console.info(selectedDevice);
 
         await selectedDevice.claimInterface(0)
-        console.log('interfaces:', device.configuration.interfaces)
+        console.log('interfaces:', selectedDevice.configuration.interfaces)
     } catch (error) {
         console.error(error);
     }
